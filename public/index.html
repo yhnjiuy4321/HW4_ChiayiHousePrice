@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>HW-4</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <h1>房屋資訊表單</h1>
+  <h2>嘉義市103年~112年房價查詢</h2>
+
+  <button id="showdata" class="btn">顯示資料</button>
+  <table id="data">
+    <tr>
+      <th> id </th>
+      <th> 日期 </th>
+      <th> 地址 </th>
+      <th> 價格(萬元) </th>
+      <th> 坪數 </th>
+      <th> 屋齡 </th>
+      <th> 樓層 </th>
+      <th> 格局(房/廳/衛) </th>
+    </tr>
+  </table>
+
+
+  <script>
+    document.getElementById('showdata').addEventListener('click', async () => {
+      const response = await fetch('/api/chiayiHouseInfo');
+      const data = await response.json();
+      const table = document.getElementById('data');
+      data.forEach((item) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.date}</td>
+                <td>${item.address}</td>
+                <td>${item.price_TenThousand}</td>
+                <td>${item.area}</td>
+                <td>${item.age}</td>
+                <td>${item.floor}</td>
+                <td>${item.layout_BBL}</td>
+            `;
+        table.appendChild(row);
+      });
+    });
+
+  </script>
+</body>
+
+<style>
+
+  h1 {
+        text-align: center;
+        font-size: 30px;
+        color: #ef4848;
+    }
+
+h2 {
+    text-align: center;
+    font-size: 20px;
+    color: #ef4848;
+}
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+  }
+
+  th {
+    background-color: #e5a7a7;
+    border: 2px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  td {
+    border: 1.5px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  tr:nth-child(odd) {
+    background-color: #f9f9f9;
+  }
+
+  tr:hover {
+    background-color: #eebcbc;
+  }
+  .main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn {
+    text-align: center;
+    width: 150px;
+    height: 40px;
+    font-size: 18px;
+    background: #ffffff;
+    border: 1px solid #ef4848;
+    border-radius: 50px;
+    color: #000;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+
+  .btn:hover {
+    box-shadow: inset 0 0 0 4px #ef476f,
+    inset 0 0 0 8px #ffd166,
+    inset 0 0 0 12px #06d6a0,
+    inset 0 0 0 16px #118ab2;
+    background: #073b4c;
+    color: #fff;
+  }
+
+
+
+</style>
+
+</html>
